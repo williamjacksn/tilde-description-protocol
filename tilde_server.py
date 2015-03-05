@@ -35,67 +35,75 @@ def main():
 
     args = parser.parse_args()
 
+    print()
     print('This interactive script will help you generate a server info')
     print('document that conforms to the Tilde Description Protocol. See')
     print('http://protocol.club/~datagrok/beta-wiki/tdp.html for more')
     print('information.')
     print()
-
-    while not (args.text or args.json):
-        sformat = input('Do you want to create a [t]ext or [j]son document? ')
-        if sformat == 't':
-            args.text = True
-        elif sformat == 'j':
-            args.json = True
-
-    if args.text:
-        print('You have chosen to create a text document.')
-    else:
-        print('You have chosen to create a json document')
-
-    server_info = dict()
-
-    print()
-    print('What is the name of this server?')
-    server_info['name'] = input('name: ')
-
-    print()
-    print('What is the URL of this server?')
-    server_info['url'] = input('url: ')
-
-    print()
-    print('What is the URL of the page describing the process required to ')
-    print('request an account on this server?')
-    server_info['signup_url'] = input('signup_url: ')
-
-    print()
-    print('Is this server currently accepting new user requests?')
-    want_users = ''
-    while want_users not in ['y', 'n']:
-        want_users = input('want_users [y/n]: ')
-    if want_users == 'y':
-        server_info['want_users'] = True
-    else:
-        server_info['want_users'] = False
-
-    print()
-    print('What is the email address of the primary server administrator?')
-    server_info['admin_email'] = input('admin_email: ')
-
-    print()
-    print('Please enter a free-form description of this server.')
-    server_info['description'] = input('description: ')
-
-    print()
-    print('Here is the server info document you requested:')
+    print('Press Ctrl+C at any time to abort the process.')
     print()
 
-    if args.text:
-        print_text(server_info)
-    else:
-        print_json(server_info, args.minify)
+    try:
+        while not (args.text or args.json):
+            fmt = input('Do you want to create a [t]ext or [j]son document? ')
+            if fmt == 't':
+                args.text = True
+            elif fmt == 'j':
+                args.json = True
 
-    print()
+        if args.text:
+            print('You have chosen to create a text document.')
+        else:
+            print('You have chosen to create a json document.')
+
+        server_info = dict()
+
+        print()
+        print('What is the name of this server?')
+        server_info['name'] = input('name: ')
+
+        print()
+        print('What is the URL of this server?')
+        server_info['url'] = input('url: ')
+
+        print()
+        print('What is the URL of the page describing the process required to')
+        print('request an account on this server?')
+        server_info['signup_url'] = input('signup_url: ')
+
+        print()
+        print('Is this server currently accepting new user requests?')
+        want_users = ''
+        while want_users not in ['y', 'n']:
+            want_users = input('want_users [y/n]: ')
+        if want_users == 'y':
+            server_info['want_users'] = True
+        else:
+            server_info['want_users'] = False
+
+        print()
+        print('What is the email address of the primary server administrator?')
+        server_info['admin_email'] = input('admin_email: ')
+
+        print()
+        print('Please enter a free-form description of this server.')
+        server_info['description'] = input('description: ')
+
+        print()
+        print('Here is the server info document you requested:')
+        print()
+
+        if args.text:
+            print_text(server_info)
+        else:
+            print_json(server_info, args.minify)
+
+        print()
+    except KeyboardInterrupt:
+        print()
+        print('Aborted.')
+        print()
 
 if __name__ == '__main__':
     main()
