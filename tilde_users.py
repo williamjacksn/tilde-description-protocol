@@ -41,7 +41,8 @@ def print_text(obj):
 
 
 def main():
-    description = 'Generate Tilde Description Protocol documents'
+    description = ('Generate a user list document that conforms to the Tilde '
+                   'Description Protocol')
     epilog = ('See http://protocol.club/~datagrok/beta-wiki/tdp.html to learn '
               'more about the Tilde Description Protocol')
     parser = argparse.ArgumentParser(description=description, epilog=epilog)
