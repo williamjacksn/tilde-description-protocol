@@ -91,7 +91,12 @@ def main():
         server_info['description'] = input('description: ')
 
         print()
-        print('Here is the server info document you requested:')
+        print('Here is the server info document you requested. These lines')
+        print('should be copied and pasted into a file served at')
+        if args.text:
+            print('{}/tilde.txt'.format(server_info['url']))
+        else:
+            print('{}/tilde.json'.format(server_info['url']))
         print()
 
         if args.text:
