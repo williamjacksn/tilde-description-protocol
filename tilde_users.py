@@ -10,14 +10,14 @@ def get_title(path):
         with path.open() as f:
             html = f.read()
     else:
-        return ''
+        return ""
 
-    if '<title>' in html and '</title>' in html:
-        _, _, tail = html.partition('<title>')
-        title, _, _ = tail.partition('</title>')
+    if "<title>" in html and "</title>" in html:
+        _, _, tail = html.partition("<title>")
+        title, _, _ = tail.partition("</title>")
         return title
     else:
-        return ''
+        return ""
 
 
 def get_mtime(path):
@@ -29,39 +29,39 @@ def get_mtime(path):
 
 def print_json(obj, minify=True):
     if minify:
-        print(json.dumps(obj, separators=(',', ':')))
+        print(json.dumps(obj, separators=(",", ":")))
     else:
         print(json.dumps(obj, indent=2))
 
 
 def print_text(obj):
-    print('username\ttitle\tmtime')
+    print("username\ttitle\tmtime")
     for user in obj:
-        print('{username}\t{title}\t{mtime}'.format(**user))
+        print("{username}\t{title}\t{mtime}".format(**user))
 
 
 def main():
-    description = ('Generate a user list document that conforms to the Tilde '
-                   'Description Protocol')
-    epilog = ('See http://protocol.club/~datagrok/beta-wiki/tdp.html to learn '
-              'more about the Tilde Description Protocol')
+    description = (
+        "Generate a user list document that conforms to the Tilde Description Protocol"
+    )
+    epilog = "See http://protocol.club/~datagrok/beta-wiki/tdp.html to learn more about the Tilde Description Protocol"
     parser = argparse.ArgumentParser(description=description, epilog=epilog)
 
-    m_help = 'Output minified JSON'
-    parser.add_argument('-m', '--minify', action='store_true', help=m_help)
+    m_help = "Output minified JSON"
+    parser.add_argument("-m", "--minify", action="store_true", help=m_help)
 
-    t_help = 'Output plain text instead of JSON'
-    parser.add_argument('-t', '--text', action='store_true', help=t_help)
+    t_help = "Output plain text instead of JSON"
+    parser.add_argument("-t", "--text", action="store_true", help=t_help)
 
     args = parser.parse_args()
 
-    p = pathlib.Path('/home')
+    p = pathlib.Path("/home")
 
     users = list()
     for user in p.iterdir():
         if user.is_dir():
             username = user.name
-            index = user / 'public_html/index.html'
+            index = user / "public_html/index.html"
             title = get_title(index)
             mtime = get_mtime(index)
             users.append(dict(username=username, title=title, mtime=mtime))
@@ -70,5 +70,6 @@ def main():
     else:
         print_json(users, args.minify)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()
